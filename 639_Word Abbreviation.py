@@ -20,6 +20,7 @@ class Solution:
     @param dict: an array of n distinct non-empty strings
     @return: an array of minimal possible abbreviations for every word
     """
+    #Use count(hash map) to record the times res[i] showed up.
     def getAbbr(self, s,n):
         res = ""
         if n >= len(s) - 2:
@@ -30,7 +31,35 @@ class Solution:
 
     def wordsAbbreviation(self, dict):
         # write your code here
-        pass
+        if not dict:
+            return []
+        l = len(dict)
+        res = []
+        prefix = []
+        count = {}
+
+        for i in range(l):
+            prefix.append(1)
+            res.append(self.getAbbr(dict[i],prefix[i]))
+            if res[i] not in count:
+                count[res[i]] = 1
+            else:
+                count[res[i]] += 1
+
+        while True:
+            unique  = True
+            for i in range(l):
+                if count[res[i]] > 1:
+                    prefix[i]+=1
+                    res[i] = self.getAbbr(dict[i],prefix[i])
+                    if res[i] not in count:
+                        count[res[i]] = 1
+                    else:
+                        count[res[i]] += 1
+                    unique = False
+            if unique:
+                    break
+        return res 
 
 testcase = Solution()
-print(testcase.getAbbr("internationalization",1))
+print(testcase.wordsAbbreviation(["like", "god", "internal", "me", "internet", "interval", "intension", "face", "intrusion"]))
