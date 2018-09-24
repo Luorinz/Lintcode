@@ -20,6 +20,7 @@ class Solution:
     @param dict: an array of n distinct non-empty strings
     @return: an array of minimal possible abbreviations for every word
     """
+    #Jiuzhang solution
     #Use count(hash map) to record the times res[i] showed up.
     def getAbbr(self, s,n):
         res = ""
