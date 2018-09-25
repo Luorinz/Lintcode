@@ -1,59 +1,60 @@
-#Medium
+# medium
 
-# Given a binary tree, determine if it is a valid binary search tree (BST).
+# Given a binary search tree (See Definition) and a node in it, find the in-order successor of that node in the BST.
 
-# Assume a BST is defined as follows:
+# If the given node has no in-order successor in the tree, return null.
 
-# The left subtree of a node contains only nodes with keys less than the node's key.
-# The right subtree of a node contains only nodes with keys greater than the node's key.
-# Both the left and right subtrees must also be binary search trees.
-# A single node tree is a BST
 # Example
-# An example:
+# Given tree = [2,1] and node = 1:
+
+#   2
+#  /
+# 1
+# return node 2.
+
+# Given tree = [2,1,3] and node = 2:
 
 #   2
 #  / \
-# 1   4
-#    / \
-#   3   5
-# The above binary tree is serialized as {2,1,4,#,#,3,5} (in level order).
+# 1   3
+# return node 3.
 
+# Challenge
+# O(h), where h is the height of the BST.
+
+# Notice
+# It's guaranteed p is one node in the given tree. (You can directly compare the memory address to find p)
 
 """
-Definition of TreeNode:
-class TreeNode:
-    def __init__(self, val):
-        self.val = val
-        self.left, self.right = None, None
+Definition for a binary tree node.
+class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 """
+
 
 class Solution:
     """
-    @param root: The root of binary tree.
-    @return: True if the binary tree is BST, or false
+    @param: root: The root of the BST.
+    @param: p: You need find the successor node of p.
+    @return: Successor of p.
     """
-    def __init__(self):
-    
-   
-
-    def isValidBST(self, root):
+#My solution (Jiuzhang solution)
+#dfs likewise
+    def inorderSuccessor(self, root, p):
         # write your code here
-        if not root:
-            return True
+        if not root or not p:
+            return None
         
-        if not self.isValidBST(root.right.val): 
-            return False
+        if root.val <= p.val:
+            return self.inorderSuccessor(root.right,p)
+        
         else:
-            if root.right.val <= root.val:
-                return False
-            else:
-                return True
-        if not self.isValidBST(root.left.val) :
-            return False
-        else:
-            if root.left.val >= root.val:
-                return False
-            else: 
-                return True
-
             
+            temp = self.inorderSuccessor(root.left,p)
+            if  temp != None:
+                return temp
+            else:
+                return root
